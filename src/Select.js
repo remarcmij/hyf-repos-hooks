@@ -7,7 +7,7 @@
   } = window;
 
   const Select = props => {
-    const renderedRef = useRef(false);
+    const isRenderedRef = useRef(false);
 
     const { repos, setRepoIndex, container } = props;
     if (repos.length === 0) {
@@ -15,7 +15,7 @@
     }
 
     // The <select> element needs to be rendered once only
-    if (renderedRef.current) {
+    if (isRenderedRef.current) {
       return;
     }
 
@@ -35,7 +35,7 @@
         }),
       );
 
-    renderedRef.current = true;
+    isRenderedRef.current = true;
   };
 
   window.Select = Select;
