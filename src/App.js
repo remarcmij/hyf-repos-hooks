@@ -23,33 +23,29 @@
       setRepos(res.data);
     }, []);
 
-    const selectComponent = Select({
+    if (!domRefs.current) {
+      const root = document.getElementById('root');
+      const headerContainer = createAndAppend('header', root, {
+        class: 'header',
+      });
+      const mainContainer = createAndAppend('main', root, {
+        class: 'main-container',
+      });
+      domRefs.current = { headerContainer, mainContainer };
+    }
+
+    const { headerContainer, mainContainer } = domRefs.current;
+
+    Select({
       repos,
       setRepoIndex,
+      container: headerContainer,
     });
 
-    const repositoryComponent = Repository({
+    Repository({
       repo: repos[repoIndex],
+      container: mainContainer,
     });
-
-    const render = () => {
-      if (!domRefs.current) {
-        const root = document.getElementById('root');
-        const headerContainer = createAndAppend('header', root, {
-          class: 'header',
-        });
-        const mainContainer = createAndAppend('main', root, {
-          class: 'main-container',
-        });
-        domRefs.current = { headerContainer, mainContainer };
-      }
-
-      const { headerContainer, mainContainer } = domRefs.current;
-      selectComponent.render(headerContainer);
-      repositoryComponent.render(mainContainer);
-    };
-
-    return { render };
   }
 
   window.onload = () => renderDOM(App);

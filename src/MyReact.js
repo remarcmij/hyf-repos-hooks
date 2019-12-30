@@ -1,14 +1,15 @@
 'use strict';
 
 window.MyReact = (() => {
-  const hooks = [];
+  let hooks = [];
   let hookIndex = 0;
   let renderPending = false;
   let _App = null;
 
   const renderApp = () => {
-    _App().render();
+    _App();
     renderPending = false;
+    hooks = hooks.length > hookIndex ? hooks.slice(0, hookIndex) : hooks;
     hookIndex = 0;
   };
 
