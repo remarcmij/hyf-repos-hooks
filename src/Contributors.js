@@ -6,8 +6,8 @@
     Contributor,
   } = window;
 
-  const Contributors = props => {
-    const { contributors, container } = props;
+  const Contributors = (container, props) => {
+    const { contributors } = props;
 
     if (contributors.length === 0) {
       return;
@@ -26,7 +26,7 @@
       class: 'contributor-list',
     });
 
-    contributors.forEach(contributor => Contributor({ contributor, ul }));
+    contributors.forEach(contributor => Contributor(ul, { contributor }));
   };
 
   window.Contributors = Contributors;

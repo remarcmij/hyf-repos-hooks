@@ -7,8 +7,8 @@
     Contributors,
   } = window;
 
-  const Repository = props => {
-    const { repo, container } = props;
+  const Repository = (container, props) => {
+    const { repo } = props;
 
     const [contributors, setContributors] = useState([]);
 
@@ -55,7 +55,7 @@
     addRow(tbody, 'Forks', repo.forks);
     addRow(tbody, 'Updated', new Date(repo.updated_at).toLocaleString());
 
-    Contributors({ contributors, container });
+    Contributors(container, { contributors });
   };
 
   window.Repository = Repository;

@@ -5,16 +5,18 @@ window.MyReact = (() => {
   let hookIndex = 0;
   let renderPending = false;
   let _App = null;
+  let _container = null;
 
   const renderApp = () => {
-    _App();
+    _App(_container);
     renderPending = false;
     hooks = hooks.length > hookIndex ? hooks.slice(0, hookIndex) : hooks;
     hookIndex = 0;
   };
 
-  const render = App => {
+  const render = (App, container) => {
     _App = App;
+    _container = container;
     renderApp();
   };
 

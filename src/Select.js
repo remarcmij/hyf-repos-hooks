@@ -6,10 +6,10 @@
     MyReact: { useRef },
   } = window;
 
-  const Select = props => {
+  const Select = (container, props) => {
     const isRenderedRef = useRef(false);
 
-    const { repos, setRepoIndex, container } = props;
+    const { repos, setRepoIndex } = props;
     if (repos.length === 0) {
       return;
     }

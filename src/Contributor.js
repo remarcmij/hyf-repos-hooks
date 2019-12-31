@@ -3,10 +3,10 @@
 {
   const { createAndAppend } = window.Util;
 
-  const Contributor = props => {
-    const { contributor, ul } = props;
+  const Contributor = (container, props) => {
+    const { contributor } = props;
 
-    const li = createAndAppend('li', ul);
+    const li = createAndAppend('li', container);
     const a = createAndAppend('a', li, {
       href: contributor.html_url,
       class: 'contributor-item',

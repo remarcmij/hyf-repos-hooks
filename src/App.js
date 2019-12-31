@@ -13,7 +13,7 @@
     Repository,
   } = window;
 
-  function App() {
+  const App = container => {
     const [repos, setRepos] = useState([]);
     const [repoIndex, setRepoIndex] = useState(0);
     const domRefs = useRef(null);
@@ -24,11 +24,10 @@
     }, []);
 
     if (!domRefs.current) {
-      const root = document.getElementById('root');
-      const headerContainer = createAndAppend('header', root, {
+      const headerContainer = createAndAppend('header', container, {
         class: 'header',
       });
-      const mainContainer = createAndAppend('main', root, {
+      const mainContainer = createAndAppend('main', container, {
         class: 'main-container',
       });
       domRefs.current = { headerContainer, mainContainer };
@@ -36,17 +35,9 @@
 
     const { headerContainer, mainContainer } = domRefs.current;
 
-    Select({
-      repos,
-      setRepoIndex,
-      container: headerContainer,
-    });
+    Select(headerContainer, { repos, setRepoIndex });
+    Repository(mainContainer, { repo: repos[repoIndex] });
+  };
 
-    Repository({
-      repo: repos[repoIndex],
-      container: mainContainer,
-    });
-  }
-
-  window.onload = () => renderDOM(App);
+  window.onload = () => renderDOM(App, document.getElementById('root'));
 }
