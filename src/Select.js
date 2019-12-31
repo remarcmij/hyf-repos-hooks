@@ -9,15 +9,11 @@
   const Select = (container, props) => {
     const isRenderedRef = useRef(false);
 
-    const { repos, setRepoIndex } = props;
-    if (repos.length === 0) {
-      return;
-    }
+    // Render once only
+    if (isRenderedRef.current) return;
 
-    // The <select> element needs to be rendered once only
-    if (isRenderedRef.current) {
-      return;
-    }
+    const { repos, setRepoIndex } = props;
+    if (repos.length === 0) return;
 
     const select = createAndAppend('select', container, {
       class: 'repo-select',
@@ -26,14 +22,12 @@
 
     select.addEventListener('change', () => setRepoIndex(select.value));
 
-    repos
-      .sort((a, b) => a.name.localeCompare(b.name))
-      .forEach((repo, index) =>
-        createAndAppend('option', select, {
-          text: repo.name,
-          value: index,
-        }),
-      );
+    repos.forEach((repo, index) =>
+      createAndAppend('option', select, {
+        text: repo.name,
+        value: index,
+      })
+    );
 
     isRenderedRef.current = true;
   };

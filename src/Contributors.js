@@ -9,10 +9,6 @@
   const Contributors = (container, props) => {
     const { contributors } = props;
 
-    if (contributors.length === 0) {
-      return;
-    }
-
     const contributorsContainer = createAndAppend('section', container, {
       class: 'contributors-container whiteframe',
     });

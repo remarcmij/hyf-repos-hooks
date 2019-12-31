@@ -1,13 +1,13 @@
 'use strict';
 
-// For simplicity, error handling has been omitted
+// For simplicity, error handling has been omitted.
 
 {
   const HYF_REPOS_URL =
     'https://api.github.com/orgs/HackYourFuture/repos?per_page=100';
 
   const {
-    MyReact: { useState, useEffect, useRef, render: renderDOM },
+    MyReact: { useState, useEffect, useRef, renderDOM },
     Util: { createAndAppend },
     Select,
     Repository,
@@ -18,12 +18,15 @@
     const [repoIndex, setRepoIndex] = useState(0);
     const domRefs = useRef(null);
 
+    // Fetch the list of repositories.
     useEffect(async () => {
-      const res = await axios.get(HYF_REPOS_URL);
-      setRepos(res.data);
-    }, []);
+      const { data } = await axios.get(HYF_REPOS_URL);
+      setRepos(data.sort((a, b) => a.name.localeCompare(b.name)));
+    }, [setRepos]);
 
-    if (!domRefs.current) {
+    // Render container elements once only and keep references
+    // to them in a useRef hook.
+    if (domRefs.current == null) {
       const headerContainer = createAndAppend('header', container, {
         class: 'header',
       });

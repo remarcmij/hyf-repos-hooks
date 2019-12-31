@@ -12,13 +12,16 @@
 
     const [contributors, setContributors] = useState([]);
 
+    // Fetch the contributors for the current repository.
     useEffect(async () => {
       if (repo) {
         const url = repo.contributors_url;
         const { data } = await axios.get(`${url}?per_page=100`);
         setContributors(data);
       }
-    }, [repo]);
+    }, [repo, setContributors]);
+
+    if (!repo) return;
 
     const addRow = (tbody, label, value) => {
       const row = createAndAppend('tr', tbody);
@@ -27,10 +30,7 @@
       return row;
     };
 
-    if (!repo) {
-      return;
-    }
-
+    // Clear out the current container content
     container.innerHTML = '';
 
     const repoContainer = createAndAppend('section', container, {
